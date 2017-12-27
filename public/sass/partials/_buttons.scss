@@ -1,4 +1,4 @@
-button {
+button, .button {
   display: inline-block;
   border: none;
   color: #fff;
@@ -12,6 +12,15 @@ button {
 }
 
 button[data-action="clear"] {
-  background-color: red;
+  background-color: tomato;
   margin-top: 15px;
+}
+
+.button--orb {
+  width: 100px;
+  text-align: center;
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  background-color: lightcoral;
 }

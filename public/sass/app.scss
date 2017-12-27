@@ -7,13 +7,38 @@ header {
   padding: 15px;
 }
 
-main {
+.list-view {
   display: flex;
-  flex-direction: row;
-  padding: 15px;
+  flex-direction: column;
+  padding: 0 15px 15px 15px;
+}
 
-  aside,
-  .map {
-    flex: 1;
+.bird-list {
+  margin: 0 -15px 15px -15px;
+  background-color: #f0f0f0;
+  border-top: 1px solid #c3c3c3;
+}
+
+.bird-item {
+  padding: 15px;
+  border-bottom: 1px solid #c3c3c3;
+  h2 {
+    font-size: 18px;
   }
+  p {
+    font-size: 12px;
+  }
+}
+
+body[data-store-state="empty"] {
+  .bird-list {
+    display: none;
+  }
+  .button--orb {
+    display: none;
+  }
+}
+
+.map {
+  height: calc(100vh - 70px);
 }
