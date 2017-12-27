@@ -1,0 +1,19 @@
+@import 'partials/_base';
+@import 'partials/_reset';
+@import 'partials/_forms';
+@import 'partials/_buttons';
+
+header {
+  padding: 15px;
+}
+
+main {
+  display: flex;
+  flex-direction: row;
+  padding: 15px;
+
+  aside,
+  .map {
+    flex: 1;
+  }
+}

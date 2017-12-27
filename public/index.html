@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:400,700,800" rel="stylesheet" />
+  <link rel="stylesheet" href="/dist/style.css">
+  <title>Bird Nerd</title>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <img src="/images/icons/logo.svg" alt="Bird Nerd">
+    </div>
+  </header>
+
+  <main>
+    
+    <aside>
+
+      <form class="add-bird">
+
+        <div class="form-group">
+          <label for="species">Species</label>
+          <input type="text" name="species" required/>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea name="description"></textarea>
+        </div>
+
+        <!-- <div class="form-group">
+          <label for="photo">Photo</label>
+          <input id="photo" type="file" accept="image/gif, image/png, image/jpeg" />
+        </div> -->
+
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input id="address" type="text" name="address" required />
+        </div>
+
+        <div class="form-group">
+          <label for="lng">Longitude</label>
+          <input id="lng" type="text" name="lng" />
+        </div>
+
+        <div class="form-group">
+          <label for="lat">Latitude</label>
+          <input id="lat" type="text" name="lat" />
+        </div>
+
+        <button type="submit">Submit</button>
+
+      </form>
+
+      <button data-action="clear" data-hide-if="store-empty">Clear items</button>
+
+    </aside>
+
+    <div id="map" class="map"></div>    
+
+  </main>
+  
+  <script src="/hoodie/client.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHWdhmwfys2Ts_5YQSVw7xPRXKu69Kp2Q&libraries=places"></script>
+  <script src="/dist/App.bundle.js"></script>
+</body>
+</html>
