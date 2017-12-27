@@ -1,4 +1,3 @@
-require('dotenv').config();
 import '../sass/app.scss';
 import { $, $$ } from './modules/bling';
 import autocomplete from './modules/autocomplete';
