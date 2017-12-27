@@ -8,6 +8,13 @@ header {
   border-bottom: 3px solid #333;
 }
 
+.logo {
+  img {
+    display: block;
+    width: 90px;
+  }
+}
+
 .list-view {
   display: flex;
   flex-direction: column;
@@ -21,7 +28,7 @@ header {
 }
 
 .bird-form {
-  padding-top: 15px;
+  padding-top: 30px;
 }
 
 .bird-item {
