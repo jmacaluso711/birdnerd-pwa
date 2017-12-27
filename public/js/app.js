@@ -11,15 +11,17 @@ const mapOptions = {
 }
 
 /**
- * Get all our Bird Form DOM Elements
+ * Get all our Bird Form DOM Elements w/Bling
  */
-const addBirdForm = document.querySelector('form.add-bird');
-const clearButton = document.querySelector('[data-action="clear"]');
+const addBirdForm = $('form.add-bird');
+const clearButton = $('[data-action="clear"]');
+const birdList = $('.bird-list ul');
 
 /**
  * Load and render our Birds on the map
  */
 function loadBirdsOnMap(map, lat = 40.5, lng = -73.9) {
+
   hoodie.store
     .findAll()
     .then(res => {
@@ -50,6 +52,7 @@ function loadBirdsOnMap(map, lat = 40.5, lng = -73.9) {
         console.error(err);
       }
     )
+
 }
 
 function makeMap(mapDiv) {
@@ -85,6 +88,7 @@ function loadAndRenderBirds() {
     )
 }
 
+loadAndRenderBirds();
 
 /**
  * Watch for changes in our Hoodie store
@@ -134,5 +138,22 @@ addBirdForm.addEventListener('submit', (e) => {
  * Render Birds
  */
 function render(birds) {
-  console.log(birds);
+  
+  if (birds.length === 0) {
+    document.body.setAttribute('data-store-state', 'empty');
+    return;
+  }
+  
+  document.body.setAttribute('data-store-state', 'not-empty');
+  
+  birdList.innerHTML = birds
+    .sort(orderByCreatedAt)
+    .map(function(bird) {
+      return `<li>${bird.species}</li>`;
+    }).join('');
+
+}
+
+function orderByCreatedAt(item1, item2) {
+  return item1.createdAt < item2.createdAt ? 1 : -1
 }

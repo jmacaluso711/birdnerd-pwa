@@ -1,4 +1,4 @@
 .hoodie
 variables.env
-
+node_modules
 public/dist
