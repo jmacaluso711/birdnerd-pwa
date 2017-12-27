@@ -1,2 +1,4 @@
 .hoodie
 variables.env
+
+public/dist
