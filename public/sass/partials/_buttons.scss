@@ -17,10 +17,11 @@ button[data-action="clear"] {
 }
 
 .button--orb {
-  width: 100px;
+  width: 100%;
   text-align: center;
   position: fixed;
-  bottom: 15px;
-  left: 15px;
+  bottom: 0px;
+  left: 0px;
   background-color: lightcoral;
+  border-radius: 0px;
 }

@@ -7,6 +7,15 @@ import autocomplete from './autocomplete';
 const addBirdForm = $('form.add-bird');
 const clearButton = $('[data-action="clear"]');
 const birdList = $('.bird-list ul');
+const startCapture = $('.button--start-capture');
+const endCapture = $('.button--end-capture');
+const takePhotoBtn = $('.button--take-photo');
+const video = $('.player');
+const photoPreview = $('.photo-preview');
+const canvas = $('.photo');
+if(canvas) {
+  const ctx = canvas.getContext('2d');
+}
 
 /**
  * load and render birds in list
@@ -47,6 +56,66 @@ if (birdList) {
   autocomplete($('#address'), $('#lat'), $('#lng'));
 
   /**
+   * All the Webcam stuff.
+   * @param {*} e 
+   */
+  
+  let localMediaStream;
+
+  function paintToCanavas() {
+    const width = video.videoWidth;
+    const height = video.videoHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    return setInterval(() => {
+      ctx.drawImage(video, 0, 0, width, height);
+    }, 16);
+  }
+  
+  function getVideo(e) {
+    e.preventDefault();
+    navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+      .then(stream => {
+        localMediaStream = stream;
+        video.src = window.URL.createObjectURL(localMediaStream);
+        video.play();
+      })
+      .catch(err => {
+        console.error(`OH NO!!!`, err);
+      });
+  }
+
+  function stopVideo(e) {
+    e.preventDefault();
+    video.pause();
+    video.src = '';
+    localMediaStream.getTracks()[0].stop();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  function takePhoto(e) {
+    e.preventDefault();
+    // played the sound
+    // snap.currentTime = 0;
+    // snap.play();
+
+    // take the data out of the canvas
+    const data = canvas.toDataURL('image/jpeg');
+    const link = document.createElement('a');
+    link.href = data;
+    link.setAttribute('download', 'handsome');
+    link.innerHTML = `<img class="bird-photo" src="${data}" alt="Bird Man" />`;
+    photoPreview.insertBefore(link, photoPreview.firsChild);
+    stopVideo(e);
+  }
+
+  startCapture.addEventListener('click', getVideo);
+  endCapture.addEventListener('click', stopVideo);
+  video.addEventListener('canplay', paintToCanavas);
+  takePhotoBtn.addEventListener('click', takePhoto);
+
+  /**
    * Add Bird from our form
    */
   addBirdForm.addEventListener('submit', (e) => {
@@ -58,6 +127,7 @@ if (birdList) {
     const address = addBirdForm.querySelector('[name="address"]').value;
     const lng = addBirdForm.querySelector('[name="lng"]').value;
     const lat = addBirdForm.querySelector('[name="lat"]').value;
+    const photo  = addBirdForm.querySelector('.bird-photo').src;
 
     addBirdForm.reset();
 
@@ -65,7 +135,8 @@ if (birdList) {
       species: species,
       description: description,
       address: address,
-      coordinates: [lng, lat]
+      coordinates: [lng, lat],
+      photo: photo
     });
 
   });
@@ -74,7 +145,7 @@ if (birdList) {
    * Render Birds
    */
   function render(birds) {
-
+    console.log(birds);
     if (birds.length === 0) {
       document.body.setAttribute('data-store-state', 'empty');
       return;
@@ -87,8 +158,10 @@ if (birdList) {
       .map(function (bird) {
         return `
           <li class="bird-item">
+            <img src="${bird.photo ? bird.photo : 'images/placeholder.png'}" alt="${bird.species}">
             <h2>${bird.species}</h2>
             <p>${bird.description}</p>
+            <p>${bird.address}</p>
           </li>
         `;
       }).join('');

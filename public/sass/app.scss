@@ -3,6 +3,10 @@
 @import 'partials/_forms';
 @import 'partials/_buttons';
 
+* {
+  box-sizing: border-box;
+}
+
 header {
   padding: 15px;
   border-bottom: 3px solid #333;
@@ -52,5 +56,5 @@ body[data-store-state="empty"] {
 }
 
 .map {
-  height: calc(100vh - 70px);
+  height: calc(100vh - 112.5px);
 }
