@@ -24,7 +24,7 @@
     
     <aside class="bird-form">
 
-      <form class="add-bird">
+      <form class="add-bird" enctype="multipart/form-data">
 
         <div class="form-group">
           <label for="species">Species</label>
@@ -37,12 +37,7 @@
         </div>
 
         <div class="form-group">
-          <canvas class="photo"></canvas>
-          <video class="player"></video>
-          <button class="button--start-capture">Start Capture</button>
-          <button class="button--end-capture">End Capture</button>
-          <button class="button--take-photo">Take Photo</button>
-          <div class="photo-preview"></div>
+          <img id="photo-prev" src="" alt="">
           <input type="file" accept="image/*" capture="camera" name="capture">
         </div>
 
@@ -69,8 +64,7 @@
 
     </aside>
 
-    <!-- <div id="map" class="map"></div>     -->
-    <a class="button button--orb" href="/map.html">Map</a>
+    <!-- <a class="button button--orb" href="/map.html">Map</a> -->
 
   </main>
   

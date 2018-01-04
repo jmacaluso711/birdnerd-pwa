@@ -4,20 +4,12 @@ import autocomplete from './autocomplete';
 /**
  * Get all our Bird Form DOM Elements w/Bling
  */
-const addBirdForm = $('form.add-bird');
-const clearButton = $('[data-action="clear"]');
-const birdList = $('.bird-list ul');
-const startCapture = $('.button--start-capture');
-const endCapture = $('.button--end-capture');
-const takePhotoBtn = $('.button--take-photo');
-const video = $('.player');
-const photoPreview = $('.photo-preview');
-const canvas = $('.photo');
-const capture = $('[name="capture"]');
+const addBirdForm = document.querySelector('form.add-bird');
+const clearButton = document.querySelector('[data-action="clear"]');
+const birdList = document.querySelector('.bird-list ul');
+const capture = document.querySelector('[name="capture"]');
 
-if(canvas) {
-
-  const ctx = canvas.getContext('2d');
+if (addBirdForm) {
 
   /**
    * load and render birds in list
@@ -58,85 +50,24 @@ if(canvas) {
     autocomplete($('#address'), $('#lat'), $('#lng'));
 
     /**
-     * All the Webcam stuff.
-     * @param {*} e 
+     * Process the Image
      */
-    
-    let localMediaStream;
-
-    function paintToCanavas() {
-      const width = video.videoWidth;
-      const height = video.videoHeight;
-      canvas.width = width;
-      canvas.height = height;
-
-      return setInterval(() => {
-        ctx.drawImage(video, 0, 0, width, height);
-      }, 16);
-    }
-    
-    function getVideo(e) {
-      e.preventDefault();
-      navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-        .then(stream => {
-          localMediaStream = stream;
-          video.src = window.URL.createObjectURL(localMediaStream);
-          video.play();
-        })
-        .catch(err => {
-          console.error(`OH NO!!!`, err);
-        });
-    }
-
-    function stopVideo(e) {
-      e.preventDefault();
-      video.pause();
-      video.src = '';
-      localMediaStream.getTracks()[0].stop();
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
-
-    function takePhoto(e) {
-      e.preventDefault();
-      // played the sound
-      // snap.currentTime = 0;
-      // snap.play();
-
-      // take the data out of the canvas
-      const data = canvas.toDataURL('image/jpeg');
-      const link = document.createElement('a');
-      link.href = data;
-      link.setAttribute('download', 'handsome');
-      link.innerHTML = `<img class="bird-photo" src="${data}" alt="Bird Man" />`;
-      photoPreview.insertBefore(link, photoPreview.firsChild);
-      stopVideo(e);
-    }
-
-    startCapture.addEventListener('click', getVideo);
-    endCapture.addEventListener('click', stopVideo);
-    video.addEventListener('canplay', paintToCanavas);
-    takePhotoBtn.addEventListener('click', takePhoto);
-
-    function getDataUrl(url, callback) {
-      var image = new Image();
-      image.onload = function () {
-        var canvas = document.createElement('canvas');
-        canvas.width = this.naturalWidth; // or 'width' if you want a special/scaled size
-        canvas.height = this.naturalHeight; // or 'height' if you want a special/scaled size
-        canvas.getContext('2d').drawImage(this, 0, 0);
-        // Get raw image data
-        callback(canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, ''));
-        // ... or get as Data URI
-        callback(canvas.toDataURL('image/png'));
-      };
-      image.src = url;
-    }
-
     capture.addEventListener('change', function() {
-      getDataUrl(this.value, function(dataUrl) {
-        
-      })
-    })
+      const fReader = new FileReader();
+      fReader.readAsDataURL(this.files[0]);
+      fReader.onloadend = function (event) {
+        const img = document.getElementById("photo-prev");
+        img.src = event.target.result;
+      }
+    });
+
+    /**
+     * Static Map Image
+     */
+
+    function staticMap([lng, lat]) {
+      return `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=14&size=800x150&key=AIzaSyCHWdhmwfys2Ts_5YQSVw7xPRXKu69Kp2Q&markers=${lat},${lng}&scale=2`
+    }
 
     /**
      * Add Bird from our form
@@ -150,8 +81,7 @@ if(canvas) {
       const address = addBirdForm.querySelector('[name="address"]').value;
       const lng = addBirdForm.querySelector('[name="lng"]').value;
       const lat = addBirdForm.querySelector('[name="lat"]').value;
-      // const photo  = addBirdForm.querySelector('.bird-photo').src;
-      const capture = addBirdForm.querySelector('[name="capture"]').value;
+      const photo = document.getElementById('photo-prev').src;
 
       addBirdForm.reset();
 
@@ -160,6 +90,7 @@ if(canvas) {
         description: description,
         address: address,
         coordinates: [lng, lat],
+        photo: photo,
       });
 
     });
@@ -168,7 +99,6 @@ if(canvas) {
      * Render Birds
      */
     function render(birds) {
-      console.log(birds);
       if (birds.length === 0) {
         document.body.setAttribute('data-store-state', 'empty');
         return;
@@ -182,6 +112,7 @@ if(canvas) {
           return `
             <li class="bird-item">
               <img src="${bird.photo ? bird.photo : 'images/placeholder.png'}" alt="${bird.species}">
+              <a href="map.html"><img src="${staticMap(bird.coordinates)}" /></a>
               <h2>${bird.species}</h2>
               <p>${bird.description}</p>
               <p>${bird.address}</p>
