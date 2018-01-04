@@ -56,6 +56,16 @@ body[data-store-state="empty"] {
   }
 }
 
+.photo-preview-container {
+  display: none;
+}
+
+body[data-photo-preview-state="not-empty"] {
+  .photo-preview-container {
+    display: block;
+  }
+}
+
 .map {
   height: calc(100vh - 112.5px);
 }

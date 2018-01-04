@@ -8,6 +8,7 @@ const addBirdForm = document.querySelector('form.add-bird');
 const clearButton = document.querySelector('[data-action="clear"]');
 const birdList = document.querySelector('.bird-list ul');
 const capture = document.querySelector('[name="capture"]');
+const emptyPreview = document.querySelector('.empty-preview');
 
 if (addBirdForm) {
 
@@ -56,9 +57,17 @@ if (addBirdForm) {
       const fReader = new FileReader();
       fReader.readAsDataURL(this.files[0]);
       fReader.onloadend = function (event) {
-        const img = document.getElementById("photo-prev");
+        const img = document.getElementById("photo-preview");
         img.src = event.target.result;
       }
+      document.body.setAttribute('data-photo-preview-state', 'not-empty');
+    });
+
+    emptyPreview.addEventListener('click', function() {
+      const img = document.getElementById("photo-preview");
+      img.src = "";
+      capture.value = "";
+      document.body.setAttribute('data-photo-preview-state', 'empty');      
     });
 
     /**
@@ -81,7 +90,7 @@ if (addBirdForm) {
       const address = addBirdForm.querySelector('[name="address"]').value;
       const lng = addBirdForm.querySelector('[name="lng"]').value;
       const lat = addBirdForm.querySelector('[name="lat"]').value;
-      const photo = document.getElementById('photo-prev').src;
+      const photo = document.getElementById('photo-preview').src;
 
       addBirdForm.reset();
 
