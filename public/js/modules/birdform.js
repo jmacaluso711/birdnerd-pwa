@@ -13,6 +13,7 @@ const takePhotoBtn = $('.button--take-photo');
 const video = $('.player');
 const photoPreview = $('.photo-preview');
 const canvas = $('.photo');
+const capture = $('[name="capture"]');
 
 if(canvas) {
 
@@ -116,6 +117,27 @@ if(canvas) {
     video.addEventListener('canplay', paintToCanavas);
     takePhotoBtn.addEventListener('click', takePhoto);
 
+    function getDataUrl(url, callback) {
+      var image = new Image();
+      image.onload = function () {
+        var canvas = document.createElement('canvas');
+        canvas.width = this.naturalWidth; // or 'width' if you want a special/scaled size
+        canvas.height = this.naturalHeight; // or 'height' if you want a special/scaled size
+        canvas.getContext('2d').drawImage(this, 0, 0);
+        // Get raw image data
+        callback(canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, ''));
+        // ... or get as Data URI
+        callback(canvas.toDataURL('image/png'));
+      };
+      image.src = url;
+    }
+
+    capture.addEventListener('change', function() {
+      getDataUrl(this.value, function(dataUrl) {
+        
+      })
+    })
+
     /**
      * Add Bird from our form
      */
@@ -128,7 +150,8 @@ if(canvas) {
       const address = addBirdForm.querySelector('[name="address"]').value;
       const lng = addBirdForm.querySelector('[name="lng"]').value;
       const lat = addBirdForm.querySelector('[name="lat"]').value;
-      const photo  = addBirdForm.querySelector('.bird-photo').src;
+      // const photo  = addBirdForm.querySelector('.bird-photo').src;
+      const capture = addBirdForm.querySelector('[name="capture"]').value;
 
       addBirdForm.reset();
 
@@ -137,7 +160,6 @@ if(canvas) {
         description: description,
         address: address,
         coordinates: [lng, lat],
-        photo: photo
       });
 
     });
