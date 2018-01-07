@@ -21,8 +21,9 @@
     <nav>
       <a href="/account.html">
         <span data-hide-if="signed-in"> Login/Signup</span>
-        <span data-hide-if="signed-out" data-value="uesrname"></span>
+        <span data-hide-if="signed-out" data-value="username"></span>
       </a>
+      <button data-hide-if="signed-out" data-action="signout">Sign Out</button>
     </nav>
   </header>
 
