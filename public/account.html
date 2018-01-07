@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:400,700,800" rel="stylesheet" />
+  <link rel="stylesheet" href="/dist/style.css">
+  <title>Bird Nerd</title>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <a href="/">
+        <img src="/images/icons/logo.svg" alt="Bird Nerd">
+      </a>
+    </div>
+    <nav>
+      <a href="/account.html">
+        <span data-hide-if="signed-in"> Login/Signup</span>
+        <span data-hide-if="signed-out" data-value="username"></span>
+      </a>
+      <button data-hide-if="signed-out" data-action="signout">Sign Out</button>
+    </nav>
+  </header>
+
+  <main class="account">
+
+    <div class="account__content" data-show="signin" data-hide-if="signed-in">
+      
+      <form class="signup" action="signup">
+        <div class="form-group">
+          <label for="signup-email">Email</label>
+          <input id="signup-email" type="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="signup-password">Password</label>
+          <input id="signup-password" type="password" name="password" required>
+        </div>
+        <div class="form-group">
+          <button class="button" type="submit">Sign Up</button>
+          <a href="#" data-action="show-signin">Log In</a>
+        </div>
+      </form>
+
+      <form class="signin" action="signin">
+        
+        <div class="signup-link">
+          <h3>New account?</h3>
+          <a href="#" class="btn" data-action="show-signup">
+            <span class="sr-only">Need an account?</span>
+            Sign up!
+          </a>
+        </div>
+        
+        <h2>Log in</h2>
+
+        <div class="form-group">
+          <label for="signin-email">Email</label>
+          <input id="signin-email" type="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="signin-password">Password</label>
+          <input id="signin-password" type="password" name="password" required>
+        </div>
+        <div class="form-group">
+          <button class="button" type="submit">Log In</button>
+        </div>
+
+      </form>
+
+    </div>
+
+  </main>
+  
+  <script src="/hoodie/client.js"></script>
+  <script src="/dist/App.bundle.js"></script>
+</body>
+</html>

@@ -12,8 +12,17 @@
 
   <header>
     <div class="logo">
-      <img src="/images/icons/logo.svg" alt="Bird Nerd">
+      <a href="/">
+        <img src="/images/icons/logo.svg" alt="Bird Nerd">
+      </a>
     </div>
+    <nav>
+      <a href="/account.html">
+        <span data-hide-if="signed-in"> Login/Signup</span>
+        <span data-hide-if="signed-out" data-value="username"></span>
+      </a>
+      <button data-hide-if="signed-out" data-action="signout">Sign Out</button>
+    </nav>
   </header>
 
   <main class="list-view">
@@ -24,7 +33,7 @@
     
     <aside class="bird-form">
 
-      <form class="add-bird">
+      <form class="add-bird" enctype="multipart/form-data">
 
         <div class="form-group">
           <label for="species">Species</label>
@@ -37,12 +46,11 @@
         </div>
 
         <div class="form-group">
-          <canvas class="photo"></canvas>
-          <video class="player"></video>
-          <button class="button--start-capture">Start Capture</button>
-          <button class="button--end-capture">End Capture</button>
-          <button class="button--take-photo">Take Photo</button>
-          <div class="photo-preview"></div>
+          <div class="photo-preview-container">
+            <span class="empty-preview">X</span>
+            <img id="photo-preview" src="" alt="">
+          </div>
+          <input type="file" accept="image/*" capture="camera" name="capture">
         </div>
 
         <div class="form-group">
@@ -64,12 +72,11 @@
 
       </form>
 
-      <button data-action="clear" data-hide-if="store-empty">Clear items</button>
+      <button class="button" data-action="clear" data-hide-if="store-empty">Clear items</button>
 
     </aside>
 
-    <!-- <div id="map" class="map"></div>     -->
-    <a class="button button--orb" href="/map.html">Map</a>
+    <!-- <a class="button button--orb" href="/map.html">Map</a> -->
 
   </main>
   
