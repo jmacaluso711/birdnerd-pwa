@@ -1,4 +1,4 @@
-button, .button {
+.button {
   display: inline-block;
   border: none;
   color: #fff;
@@ -9,6 +9,7 @@ button, .button {
   background-color: #333;
   border-radius: 5px;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 button[data-action="clear"] {
