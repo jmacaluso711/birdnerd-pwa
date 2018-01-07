@@ -114,6 +114,25 @@ body[data-photo-preview-state="not-empty"] {
   height: calc(100vh - 112.5px);
 }
 
+.bird-popup {
+  width: 300px;
+  img {
+    width: 100%;
+  }
+}
+
+.geolocate[type="text"] {
+  width: 100%;
+  border-top: 0px;
+  border-right: none;
+  border-left: none;
+  border-bottom: $border;
+  padding-top: $spacing;
+  padding-bottom: $spacing;
+  padding-left: $spacing * 2;
+  font-size: 20px;
+}
+
 /* Show content for screenreaders only */
 .sr-only {
   position: absolute;
