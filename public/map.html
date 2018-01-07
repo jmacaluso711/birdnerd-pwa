@@ -14,8 +14,16 @@
 
   <header>
     <div class="logo">
-      <img src="/images/icons/logo.svg" alt="Bird Nerd">
+      <a href="/">
+        <img src="/images/icons/logo.svg" alt="Bird Nerd">
+      </a>
     </div>
+    <nav>
+      <a href="/account.html">
+        <span data-hide-if="signed-in"> Login/Signup</span>
+        <span data-hide-if="signed-out" data-value="uesrname"></span>
+      </a>
+    </nav>
   </header>
 
   <main>

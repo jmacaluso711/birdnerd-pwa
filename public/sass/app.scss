@@ -3,7 +3,8 @@
 @import 'partials/_forms';
 @import 'partials/_buttons';
 
-$border: 4px solid #333;
+$body-color: #333;
+$border: 4px solid $body-color;
 $spacing: 10px;
 
 * {
@@ -11,8 +12,18 @@ $spacing: 10px;
 }
 
 header {
+  display: flex;
+  align-items: center;
   padding: $spacing + 5;
   border-bottom: $border;
+  nav {
+    margin-left: auto;
+    a {
+      color: $body-color;
+      text-decoration: none;
+      font-weight: 700;
+    }
+  }
 }
 
 .logo {
@@ -22,13 +33,16 @@ header {
   }
 }
 
-.list-view {
+.list-view,
+.account {
   display: flex;
   flex-direction: column;
   padding: 0 15px 15px 15px;
 }
 
-.bird-list {
+.bird-list,
+.account__content {
+  width: 100%;
   max-width: 620px;
   margin: 0 auto;
   padding-top: $spacing * 4;
@@ -98,4 +112,16 @@ body[data-photo-preview-state="not-empty"] {
 
 .map {
   height: calc(100vh - 112.5px);
+}
+
+/* Show content for screenreaders only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
