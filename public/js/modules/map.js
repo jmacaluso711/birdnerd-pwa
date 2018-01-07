@@ -1,16 +1,18 @@
+import { $ } from './bling';
+
 /**
  * Base options for map view
  */
 const mapOptions = {
   center: { lat: 40.5, lng: -73.9 },
-  zoom: 10
+  zoom: 8
 }
 
 /**
  * Load and render our Birds on the map
  */
 function loadBirdsOnMap(map, lat = 40.5, lng = -73.9) {
-
+ 
   hoodie.store
     .findAll()
     .then(res => {
@@ -35,6 +37,20 @@ function loadBirdsOnMap(map, lat = 40.5, lng = -73.9) {
         return marker;
       });
 
+      // when someone clicks on marker show details
+      markers.forEach(marker => marker.addListener('click', function() {
+        const html = `
+          <div class="bird-popup">
+            <img src="${this.place.photo}" alt="${this.place.species}" />
+          </div>
+        `;
+        infoWindow.setContent(html);
+        infoWindow.open(map, this);
+      }));
+
+      map.setCenter(bounds.getCenter());
+      map.fitBounds(bounds);
+
     })
     .catch(
       (err) => {
@@ -55,8 +71,7 @@ export default function makeMap(mapDiv) {
 
   // autocomplete.addListener('place_changed', () => {
   //   const place = autocomplete.getPlace();
-
-  //   loadPlaces(map, place.geometry.location.lat(), place.geometry.location.lng())
-  // })
+  //   loadBirdsOnMap(map, place.geometry.location.lat(), place.geometry.location.lng())
+  // });
 
 }
