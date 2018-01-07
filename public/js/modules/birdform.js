@@ -142,11 +142,19 @@ if (addBirdForm) {
       .map(function (bird) {
         return `
           <li class="bird-item">
-            <img src="${bird.photo ? bird.photo : 'images/placeholder.png'}" alt="${bird.species}">
-            <a href="map.html"><img src="${staticMap(bird.coordinates)}" /></a>
             <h2>${bird.species}</h2>
-            <p>${bird.description}</p>
-            <p>${bird.address}</p>
+            <div class="bird-item__description">
+              <p>${bird.description}</p>
+            </div>
+            <div class="bird-item__img">
+              <img src="${bird.photo ? bird.photo : 'images/placeholder.png'}" alt="${bird.species}">
+            </div>
+            <div class="bird-item__map">
+              <a href="map.html"><img src="${staticMap(bird.coordinates)}" /></a>
+            </div>
+            <div class="bird-item__address">
+              <p>${bird.address}</p>
+            </div>
           </li>
         `;
       }).join('');
